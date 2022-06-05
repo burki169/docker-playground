@@ -33,5 +33,5 @@ jobs:
     - name: Publish the Docker image
       run: |                
         docker login --username=${{ secrets.DOCKER_HUB_USER }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
-        docker image push $DOCKER_IMAGE_TAG
+        docker image push $DOCKER_REPO_NAME/$DOCKER_IMAGE_TAG
         docker logout
