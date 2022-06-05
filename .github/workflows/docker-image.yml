@@ -7,6 +7,7 @@ on:
     branches: [ "main" ]
 env:  
   DOCKER_REPO_NAME: burki169
+  DOCKER_IMAGE_BASE_NAME: docker-playground
 jobs:
 
   build:
@@ -16,21 +17,21 @@ jobs:
     steps:    
     - uses: actions/checkout@v3
     
-    - name: Set docker image tag
+    - name: Get commit Id
       run: |
-         echo "COMMIT_ID=$GITHUB_SHA" >> $GITHUB_ENV
+         echo "COMMIT_ID=$GITHUB_SHA" >> $GITHUB_ENV                    
          
-    - name: Test commit Id
+    - name: Set image id
       run: |
-        echo $COMMIT_ID
+         echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_BASE_NAME:$COMMIT_ID" >> $GITHUB_ENV                    
     
     - name: Build the Docker image
       run: |
         echo $IMAGE_TAG
-        docker build . --file Dockerfile --tag $IMAGE_TAG
+        docker build . --file Dockerfile --tag $DOCKER_IMAGE_TAG
     
     - name: Publish the Docker image
       run: |                
         docker login --username=${{ secrets.DOCKER_HUB_USER }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
-        docker image push $DOCKER_REPO_NAME/$IMAGE_TAG
+        docker image push $DOCKER_IMAGE_TAG
         docker logout
