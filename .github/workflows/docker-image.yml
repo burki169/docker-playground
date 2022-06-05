@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  IMAGE_TAG: docker-playground:$(date +%s)
+  IMAGE_TAG: docker-playground:$GITHUB_REF_NAME-$GITHUB_SHA
   DOCKER_REPO_NAME: burki169
 jobs:
 
@@ -17,7 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $IMAGE_TAG
+      run: |
+        echo $IMAGE_TAG
+        docker build . --file Dockerfile --tag $IMAGE_TAG
     
     - name: Publish the Docker image
       run: |                
