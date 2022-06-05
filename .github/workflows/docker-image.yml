@@ -19,10 +19,10 @@ jobs:
     
     - name: Publish the Docker image
       env: 
-        dockerUser: ${{ secrets.DOCKER_HUB_USER }}
+        DOCKER_USER: ${{ secrets.DOCKER_HUB_USER }}
       run: |
         echo '------'
-        echo ${{ env.dockerUser }}
+        echo 'user is: $DOCKER_USER'
         docker login --username=${{ secrets.DOCKER_HUB_USER }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
-        docker image push $dockerUser/docker-playground:$(date +%s)
+        docker image push $DOCKER_USER/docker-playground:$(date +%s)
         docker logout
