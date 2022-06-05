@@ -18,9 +18,11 @@ jobs:
       run: docker build . --file Dockerfile --tag docker-playground:$(date +%s)
     
     - name: Publish the Docker image
+      env: 
+        dockerUser: ${{ secrets.DOCKER_HUB_USER }}
       run: |
         echo '------'
-        echo ${{ secrets.DOCKER_HUB_USER }}
+        echo env.dockerUser
         docker login --username=${{ secrets.DOCKER_HUB_USER }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
-        docker image push ${{secrets.DOCKER_HUB_USER}}/docker-playground:$(date +%s)
+        docker image push env.dockerUser/docker-playground:$(date +%s)
         docker logout
