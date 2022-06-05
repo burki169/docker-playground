@@ -19,6 +19,7 @@ jobs:
     
     - name: Publish the Docker image
       run: |
+        echo '------'
         echo ${{ secrets.DOCKER_HUB_USER }}
         docker login --username=${{ secrets.DOCKER_HUB_USER }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
         docker image push ${{secrets.DOCKER_HUB_USER}}/docker-playground:$(date +%s)
