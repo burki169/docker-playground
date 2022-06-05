@@ -23,7 +23,7 @@ jobs:
          
     - name: Set image id
       run: |
-         echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_BASE_NAME:$COMMIT_ID" >> $GITHUB_ENV                    
+         echo "DOCKER_IMAGE_TAG=$DOCKER_REPO_NAME/$DOCKER_IMAGE_BASE_NAME:$COMMIT_ID" >> $GITHUB_ENV                    
     
     - name: Build the Docker image
       run: |
@@ -33,5 +33,5 @@ jobs:
     - name: Publish the Docker image
       run: |                
         docker login --username=${{ secrets.DOCKER_HUB_USER }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
-        docker image push $DOCKER_REPO_NAME/$DOCKER_IMAGE_TAG
+        docker image push $DOCKER_IMAGE_TAG
         docker logout
