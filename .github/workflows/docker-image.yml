@@ -22,7 +22,7 @@ jobs:
         dockerUser: ${{ secrets.DOCKER_HUB_USER }}
       run: |
         echo '------'
-        echo $dockerUser
+        echo ${{ env.dockerUser }}
         docker login --username=${{ secrets.DOCKER_HUB_USER }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
         docker image push $dockerUser/docker-playground:$(date +%s)
         docker logout
