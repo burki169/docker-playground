@@ -13,8 +13,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    #environment: 
-    #  name: test
+    environment: 
+      name: test
 
     steps:    
     - uses: actions/checkout@v3
@@ -24,7 +24,13 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_HUB_USER }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
-    
+    -
+      name: Play with env variables
+      env:
+        MY_COMMIT_ID : $GITHUB_SHA
+      run: |
+        echo "$MY_COMMIT_ID"
+      
     - name: Get commit Id
       run: |
          echo "COMMIT_ID=$GITHUB_SHA" >> $GITHUB_ENV                    
